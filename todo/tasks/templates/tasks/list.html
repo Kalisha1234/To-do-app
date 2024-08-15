@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyRoixCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body{
+            background-color: blue;
+        }
+
+        input{
+            width: 100%;
+            box-sizing: border-box;
+            margin: 8px 0;
+            padding: 12px 20px
+        }
+        input::placeholder{
+            color: gray;
+        }
+        .submit{
+            background-color: rgb(97, 92, 241);
+            border: 3px solid blue;
+            border-radius: 10px;
+            width: 450px;
+            margin: 20px;
+        }
+
+        .center-column{
+            width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 6px 2px 30px 0px rgba(0, 0, 0, 75);
+        }
+        .item-row{
+            background-color: rgb(148, 148, 233);
+            margin: 10px;
+            padding: 20px;
+            border-radius: 3px;
+            color: #fff;
+            font-size: 20px;
+            box-shadow: 0px, -1px 10px -4px rgba(0, 0, 0, 75);
+        }
+        .btn-danger{
+            background-color: #e5d1ab;
+            border-radius: 5px;
+            /* border-color: #e59400; */
+            border: 3px solid #aea491;
+            width: 100px;
+            height: 60px;
+            
+        }
+        .btn-info{
+            background-color: #b9ecd8;
+            border-radius: 5px;
+            /* border-color: #e59400; */
+            border: 3px solid #abc9bd;
+            width: 100px;
+            height: 60px;
+        }
+        #todo{
+            color: rgb(7, 75, 114);
+            font-size: 35px;
+        }  
+    </style>
+</head>
+<body>
+    <div class="center-column">
+                <h3 id="todo"><center>To Do</center> </h3>
+
+        <form action="/" method="POST">
+            {%csrf_token%}
+            {{form.title}}
+            <input class="submit" type="submit" name="Create Task">
+        </form>
+
+        <div class="todo-list">
+    {% for task in tasks %}
+        <div class="item-row">
+            <a class="btn btn-sm btn-info" href="{% url 'update_task' task.id %}">Update</a>
+            <a class="btn btn-sm btn-danger" href="{% url 'delete' task.id %}">Delete</a>
+
+            {% if task.complete == True %}
+            <strike>{{task }}</strike>
+            {% else %}
+            <span>{{ task}}</span>
+            {% endif%}
+        </div>
+    {% endfor%}
+        </div>
+    </div>
+</body>
+</html>
